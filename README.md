@@ -6,6 +6,8 @@ There are 2 commands for deploying:
   - `/ml-deploy/deploy-local-zip` deploy a local zip file. e.g. one created in a build task
   - `/ml-deploy/deploy-ml-modules` deploy a version of the shared [ml modules library](https://github.com/springernature/ml) from [artifactory](https://springernature.jfrog.io/springernature/simple/libs-release-local/com/springer/ml-modules/)
 
+all arguments are passed as environment variables.
+
 ## Halfpipe examples
 
 ### deploying a local zip created in build task
@@ -33,6 +35,9 @@ tasks:
 
 - type: deploy-cf
   name: Deploy to CF Live
+  deploy_artifact: target/distribution/my-app.zip
+  vars:
+    APP_VERSION: ??? todo ???
   ...
 ```
 
