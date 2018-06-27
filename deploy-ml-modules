@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+source ./deploy-functions
+
+require_env_vars "ARTIFACTORY_USERNAME" "ARTIFACTORY_PASSWORD" "MARKLOGIC_HOST" "APP_NAME" "APP_VERSION" "ML_MODULES_VERSION"
+
+declare local_zip="/tmp/ml-modules-${ML_MODULES_VERSION}.zip"
+
+fetch_ml_modules "${ML_MODULES_VERSION}" "${ARTIFACTORY_USERNAME}:${ARTIFACTORY_PASSWORD}" "${local_zip}"
+
+deploy_to_marklogic "${MARKLOGIC_HOST}" "${APP_NAME}" "${APP_VERSION}" "${local_zip}"
