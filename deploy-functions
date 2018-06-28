@@ -6,7 +6,7 @@ require_env_vars() {
       env_ok=false
     fi
   done
-  [ "${env_ok}" = false ] && exit 1
+  [ "${env_ok}" = true ] || exit 1
 }
 
 fetch_ml_modules() {
