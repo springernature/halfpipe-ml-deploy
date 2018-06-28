@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source ./deploy-functions
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $DIR/deploy-functions
 
 require_env_vars "ARTIFACTORY_USERNAME" "ARTIFACTORY_PASSWORD" "MARKLOGIC_HOST" "APP_NAME" "APP_VERSION" "ML_MODULES_VERSION"
 
