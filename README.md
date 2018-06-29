@@ -14,17 +14,8 @@ All arguments are passed as environment variables.
 ## Halfpipe examples
 
 ### deploying a local zip created in build task
-```
+```yml
 tasks:
-- type: run
-  name: Build
-  script: ./build
-  docker:
-    image: alpine
-  save_artifacts:
-  - target/distribution/my-app.zip
-  - target/xquery.zip
-
 - type: run
   name: Deploy to MarkLogic Live
   script: /ml-deploy/deploy-local-zip
@@ -36,15 +27,11 @@ tasks:
     APP_NAME: my-app
     APP_VERSION: v1        # OPTIONAL defaults to $GIT_REVISION
     DEPLOY_ZIP: target/xquery.zip
-
-- type: deploy-cf
-  name: Deploy to CF Live
-  deploy_artifact: target/distribution/my-app.zip
   ...
 ```
 
 ### deploying a version of the shared ml modules library from artifactory
-```
+```yml
 tasks:
 - type: run
   name: Deploy to MarkLogic Live
