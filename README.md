@@ -8,6 +8,11 @@ There are 2 commands for deploying:
 
 all arguments are passed as environment variables.
 
+xquery modules are deployed using the current git revision as their version. So apps should reach them like this:
+
+`http://{MARKLOGIC_HOST}:7655/{APP_NAME}/{GIT_REVISION}/some/endpoint.xqy`
+
+
 ## Halfpipe examples
 
 ### deploying a local zip created in build task
@@ -15,6 +20,7 @@ all arguments are passed as environment variables.
 tasks:
 - type: run
   name: Build
+  script: ./build
   docker:
     image: alpine
   save_artifacts:
@@ -30,14 +36,11 @@ tasks:
   vars:
     MARKLOGIC_HOST: ml-write.live.sl.i.springer.com
     APP_NAME: my-app
-    APP_VERSION: ??? todo ???
     DEPLOY_ZIP: target/xquery.zip
 
 - type: deploy-cf
   name: Deploy to CF Live
   deploy_artifact: target/distribution/my-app.zip
-  vars:
-    APP_VERSION: ??? todo ???
   ...
 ```
 
@@ -54,6 +57,5 @@ tasks:
     ARTIFACTORY_PASSWORD: ((artifactory.password))
     MARKLOGIC_HOST: ml-write.live.sl.i.springer.com
     APP_NAME: my-app
-    APP_VERSION: ??? todo ???
     ML_MODULES_VERSION: "2.1425"
 ```
