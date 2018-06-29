@@ -6,11 +6,9 @@ There are 2 commands for deploying:
   - `/ml-deploy/deploy-local-zip` deploy a local zip file. e.g. one created in a build task
   - `/ml-deploy/deploy-ml-modules` deploy a version of the shared [ml modules library](https://github.com/springernature/ml) from [artifactory](https://springernature.jfrog.io/springernature/simple/libs-release-local/com/springer/ml-modules/)
 
-all arguments are passed as environment variables.
+All arguments are passed as environment variables.
 
-xquery modules are deployed using the current git revision as their version. So apps should reach them like this:
-
-`http://{MARKLOGIC_HOST}:7655/{APP_NAME}/{GIT_REVISION}/some/endpoint.xqy`
+`APP_VERSION` is optional. By default it is set to the current git revision. So apps should reach them like this: `http://{MARKLOGIC_HOST}:7655/{APP_NAME}/{GIT_REVISION}/some/endpoint.xqy`
 
 
 ## Halfpipe examples
@@ -36,6 +34,7 @@ tasks:
   vars:
     MARKLOGIC_HOST: ml-write.live.sl.i.springer.com
     APP_NAME: my-app
+    APP_VERSION: v1        # OPTIONAL defaults to $GIT_REVISION
     DEPLOY_ZIP: target/xquery.zip
 
 - type: deploy-cf
@@ -57,5 +56,6 @@ tasks:
     ARTIFACTORY_PASSWORD: ((artifactory.password))
     MARKLOGIC_HOST: ml-write.live.sl.i.springer.com
     APP_NAME: my-app
+    APP_VERSION: v1        # OPTIONAL defaults to $GIT_REVISION
     ML_MODULES_VERSION: "2.1425"
 ```
