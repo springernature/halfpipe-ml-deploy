@@ -33,12 +33,12 @@ deploy_to_marklogic() {
     # delete first if the version is "LOCAL" or "v1" in order to replace existing modules
     if [[ "${app_version}" == "LOCAL" || "${app_version}" == "v1" ]]; then
       echo "Deleting existing version at ${ml_url}"
-      echo curl -q -fsS --digest -u deployer:DeployMe -X DELETE ${ml_url}
+      curl -q -fsS --digest -u deployer:DeployMe -X DELETE ${ml_url}
       echo
     fi
 
     echo "Deploying ${modules_zip} to ${ml_url}"
-    echo curl -q -fsS --digest -u deployer:DeployMe --upload-file ${modules_zip} ${ml_url}
+    curl -q -fsS --digest -u deployer:DeployMe --upload-file ${modules_zip} ${ml_url}
     echo "Finished successfully. New modules available at: ${ml_url}"
   
   done
