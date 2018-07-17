@@ -21,21 +21,25 @@ fetch_ml_modules() {
 }
 
 deploy_to_marklogic() {
-  declare host="${1}"
+  declare hosts="${1}"
   declare app_name="${2}"
   declare app_version="${3}"
   declare modules_zip="${4}"
-  declare ml_url="http://${host}:7654/apps/${app_name}/${app_version}"
 
-  # delete first if the version is "LOCAL" or "v1" in order to replace existing modules
-  if [[ "${app_version}" == "LOCAL" || "${app_version}" == "v1" ]]; then
-    echo "Deleting existing version at ${ml_url}"
-    curl -q -fsS --digest -u deployer:DeployMe -X DELETE ${ml_url}
-    echo
-  fi
+  for host in $(echo $hosts | tr -d '[:space:]' | tr ',' ' '); do
 
-  echo "Deploying ${modules_zip} to ${ml_url}"
-  curl -q -fsS --digest -u deployer:DeployMe --upload-file ${modules_zip} ${ml_url}
-  echo
-  echo "Finished successfully. New modules available at: ${ml_url}"
+    declare ml_url="http://${host}:7654/apps/${app_name}/${app_version}"
+
+    # delete first if the version is "LOCAL" or "v1" in order to replace existing modules
+    if [[ "${app_version}" == "LOCAL" || "${app_version}" == "v1" ]]; then
+      echo "Deleting existing version at ${ml_url}"
+      echo curl -q -fsS --digest -u deployer:DeployMe -X DELETE ${ml_url}
+      echo
+    fi
+
+    echo "Deploying ${modules_zip} to ${ml_url}"
+    echo curl -q -fsS --digest -u deployer:DeployMe --upload-file ${modules_zip} ${ml_url}
+    echo "Finished successfully. New modules available at: ${ml_url}"
+  
+  done
 }

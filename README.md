@@ -10,6 +10,7 @@ All arguments are passed as environment variables.
 
 `APP_VERSION` is optional. By default it is set to the current git revision. So apps should reach them like this: `http://{MARKLOGIC_HOST}:7655/{APP_NAME}/{GIT_REVISION}/some/endpoint.xqy`
 
+It is possible to deploy to more than one `MARKLOGIC_HOST` by providing a comma separated list of hostnames.
 
 ## Halfpipe examples
 
@@ -30,7 +31,7 @@ tasks:
   ...
 ```
 
-### deploying a version of the shared ml modules library from artifactory
+### deploying a version of the shared ml modules library from artifactory to 2 MarkLogic hosts
 ```yml
 tasks:
 - type: run
@@ -41,7 +42,7 @@ tasks:
   vars:
     ARTIFACTORY_USER: ((artifactory.username))
     ARTIFACTORY_PASSWORD: ((artifactory.password))
-    MARKLOGIC_HOST: ml-write.live.sl.i.springer.com
+    MARKLOGIC_HOST: ml.dev.springer-sbm.com,ml.qa1.springer-sbm.com
     APP_NAME: my-app
     APP_VERSION: v1        # OPTIONAL defaults to $GIT_REVISION
     ML_MODULES_VERSION: "2.1425"
