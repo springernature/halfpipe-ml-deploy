@@ -3,8 +3,8 @@ set -euo pipefail
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $DIR/deploy-functions
 
-# try to use .git/ref if APP_VERSION is not set
-[ -z "${APP_VERSION:-}" ] && [ -f .git/ref ] && APP_VERSION="$(cat .git/ref)"
+# try to use GIT_REVISION if APP_VERSION is not set
+APP_VERSION="${APP_VERSION:-$GIT_REVISION}"
 
 require_env_vars "MARKLOGIC_HOST" "APP_NAME" "APP_VERSION" "DEPLOY_ZIP"
 
