@@ -14,36 +14,29 @@ It is possible to deploy to more than one `MARKLOGIC_HOST` by providing a comma 
 
 ## Halfpipe examples
 
+There are halfpipe task types for the 2 commands:
+
 ### deploying a local zip created in build task
 ```yml
 tasks:
-- type: run
-  name: Deploy to MarkLogic Live
-  script: /ml-deploy/deploy-local-zip
-  docker:
-    image: eu.gcr.io/halfpipe-io/halfpipe-ml-deploy
-  restore_artifacts: true
-  vars:
-    MARKLOGIC_HOST: ml-write.live.sl.i.springer.com
-    APP_NAME: my-app
-    APP_VERSION: v1        # OPTIONAL defaults to $GIT_REVISION
-    DEPLOY_ZIP: target/xquery.zip
+- type: deploy-ml-zip
+  deploy_zip: target/xquery.zip  
+  app_name: example-app       # optional. defaults to pipeline name
+  app_version: v1             # optional. defaults to GIT_REVISION
+  targets:
+  - ml.dev.springer-sbm.com
   ...
 ```
 
 ### deploying a version of the shared ml modules library from artifactory to 2 MarkLogic hosts
 ```yml
 tasks:
-- type: run
-  name: Deploy to MarkLogic Live
-  script: /ml-deploy/deploy-ml-modules
-  docker:
-    image: eu.gcr.io/halfpipe-io/halfpipe-ml-deploy
-  vars:
-    ARTIFACTORY_USER: ((artifactory.username))
-    ARTIFACTORY_PASSWORD: ((artifactory.password))
-    MARKLOGIC_HOST: ml.dev.springer-sbm.com,ml.qa1.springer-sbm.com
-    APP_NAME: my-app
-    APP_VERSION: v1        # OPTIONAL defaults to $GIT_REVISION
-    ML_MODULES_VERSION: "2.1425"
+- type: deploy-ml-modules
+  name: Deploy XQuery to Dev and QA
+  ml_modules_version: "2.1428"
+  app_name: halfpipe-example  # optional. defaults to pipeline name
+  app_version: v1             # optional. defaults to GIT_REVISION
+  targets:
+  - ml.dev.springer-sbm.com
+  - ml.qa1.springer-sbm.com
 ```
