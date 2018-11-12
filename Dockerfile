@@ -1,3 +1,5 @@
-FROM bash:4.4
-RUN apk add --no-cache curl zip
+FROM debian:stretch-slim
+RUN apt-get update && apt-get install -y \
+    curl \
+    zip
 ADD deploy-* /ml-deploy/
