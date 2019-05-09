@@ -3,8 +3,11 @@ set -euo pipefail
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $DIR/deploy-functions
 
-# try to use GIT_REVISION if APP_VERSION is not set
-APP_VERSION="${APP_VERSION:-$GIT_REVISION}"
+if [[ "${USE_BUILD_VERSION:-}" == "true" ]]; then
+  APP_VERSION="${BUILD_VERSION}"
+else
+  APP_VERSION="${APP_VERSION:-$GIT_REVISION}"
+fi
 
 require_env_vars "ARTIFACTORY_USERNAME" "ARTIFACTORY_PASSWORD" "MARKLOGIC_HOST" "APP_NAME" "APP_VERSION" "ML_MODULES_VERSION"
 
