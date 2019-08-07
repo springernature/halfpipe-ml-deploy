@@ -40,6 +40,7 @@ deploy_to_marklogic() {
 
     echo "Deploying ${modules_zip} to ${ml_url}"
     $kurl --upload-file ${modules_zip} ${ml_url}
+    echo
     echo "Finished successfully. New modules available at: ${ml_url}"
     echo
   done
