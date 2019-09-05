@@ -27,7 +27,7 @@ tasks:
   app_version: v1             # optional. defaults to GIT_REVISION
   use_build_version: true     # optional. Use BUILD_VERSION instead of GIT_REVISION. defaults to false
   targets:
-  - ml.dev.springer-sbm.com
+  - marklogic.host
   ...
 ```
 
@@ -41,6 +41,6 @@ tasks:
   app_version: v1             # optional. defaults to GIT_REVISION
   use_build_version: true     # optional. Use BUILD_VERSION instead of GIT_REVISION. defaults to false
   targets:
-  - ml.dev.springer-sbm.com
-  - ml.qa1.springer-sbm.com
+  - marklogic.dev.host
+  - marklogic.qa.host
 ```
