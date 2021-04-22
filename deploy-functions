@@ -25,7 +25,6 @@ deploy_to_marklogic() {
   declare app_name="${2}"
   declare app_version="${3}"
   declare modules_zip="${4}"
-  declare kurl="curl -q -fsS --digest -u ${MARKLOGIC_USERNAME:-deployer}:${MARKLOGIC_PASSWORD:-DeployMe}"
 
   for host in $(echo $hosts | tr -d '[:space:]' | tr ',' ' '); do
 
@@ -34,14 +33,25 @@ deploy_to_marklogic() {
     # delete first if the version is "LOCAL" or "v1" in order to replace existing modules
     if [[ "${app_version}" == "LOCAL" || "${app_version}" == "v1" ]]; then
       echo "Deleting existing version at ${ml_url}"
-      $kurl -X DELETE ${ml_url}
+      kurl -X DELETE ${ml_url}
       echo
     fi
 
     echo "Deploying ${modules_zip} to ${ml_url}"
-    $kurl --upload-file ${modules_zip} ${ml_url}
+    kurl --upload-file ${modules_zip} ${ml_url}
     echo
     echo "Finished successfully. New modules available at: ${ml_url}"
     echo
   done
+}
+
+# falls back to default credentials if those provided in env don't work
+kurl() {
+  declare default_username="deployer"
+  declare default_password="DeployMe"
+  declare prefix='curl -q -fsS --digest -u'
+  $prefix ${MARKLOGIC_USERNAME:-$default_username}:${MARKLOGIC_PASSWORD:-$default_password} $@ || (
+    echo "Retrying with default creds"
+    $prefix ${default_username}:${default_password} $@
+  )
 }
