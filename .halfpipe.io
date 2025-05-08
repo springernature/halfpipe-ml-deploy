@@ -4,6 +4,8 @@ pipeline: halfpipe-ml-deploy
 feature_toggles:
 - update-pipeline
 
+slack_channel: "#ee-release-engineering"
+
 triggers:
 - type: git
 - type: timer
