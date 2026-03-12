@@ -1,0 +1,10 @@
+version: 1
+component:
+  name: Halfpipe ML Deploy
+  description: Deploy xquery apps to MarkLogic with ml-deploy
+  type: application_module
+  system: APPL-437
+  owner: engineering-enablement
+  language: bash
+  lifecycle: core
+  tier: mission-critical
