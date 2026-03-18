@@ -11,3 +11,7 @@ component:
   properties:
     pipelines:
       - concourse_engineering-enablement_halfpipe-ml-deploy_408
+  tools:
+    - category: issue_tracking
+      name: GitHub
+      url: https://github.com/springernature/halfpipe-ml-deploy/issues
