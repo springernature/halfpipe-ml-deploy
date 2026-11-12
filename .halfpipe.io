@@ -1,5 +1,4 @@
 team: engineering-enablement
-pipeline: halfpipe-ml-deploy
 
 feature_toggles:
 - update-pipeline
